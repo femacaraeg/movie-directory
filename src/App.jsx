@@ -4,7 +4,7 @@ import React from 'react';
 function App() {
   return (
     <>
-      <p>HELLO WORLD!</p>
+      <p>MOVIE DIRECTORY</p>
     </>
   );
 }

@@ -7,7 +7,7 @@ function App() {
   return (
     <>
       <AppBar />
-      <p>MOVIE DIRECTORY!</p>
+      <p className="text-violet-600">MOVIE DIRECTORY!</p>
     </>
   );
 }

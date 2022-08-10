@@ -1,11 +1,18 @@
 module.exports = {
-  content: ["./dist/*"],
+  content: [
+    "./dist/*",
+    "./src/**/*.{html,js,ts, tsx}",
+    "./src/components/**/*.{js,ts,tsx}",
+  ],
+  // content: ["./dist/*"],
   theme: {
     textColor: {
-      white: "#FFF",
       black: "#000",
     },
     extend: {
+      fontFamily: {
+        lato: ["Lato", "sans-serif"],
+      },
       colors: {
         "black-brand": "#252125",
         "primary-text": "#252125",

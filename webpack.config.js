@@ -1,13 +1,13 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   mode: "production",
   entry: path.join(__dirname, "src", "index.tsx"),
   output: {
-    path:path.resolve(__dirname, "dist"),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, "dist"),
+    filename: "bundle.js",
     clean: true,
   },
   module: {
@@ -18,14 +18,14 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
-          }
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+          },
         },
       },
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: 'ts-loader'
+        loader: "ts-loader",
       },
       {
         test: /\.css$/i,
@@ -33,29 +33,29 @@ module.exports = {
       },
       {
         test: /\.(png|jp(e*)g|svg|gif)$/,
-        use: ['file-loader'],
+        use: ["file-loader"],
       },
       {
         test: /\.svg$/,
-        use: ['@svgr/webpack'],
-      },  
-    ]
+        use: ["@svgr/webpack"],
+      },
+    ],
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: path.join(__dirname, "src", "index.html"),
-      filename: 'index.html'
+      filename: "index.html",
     }),
     new MiniCssExtractPlugin({
-      filename:"output.css",
-    })
+      filename: "output.css",
+    }),
   ],
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+    maxAssetSize: 512000,
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js' ],
-  }
+    extensions: [".tsx", ".ts", ".js"],
+  },
 };

@@ -1,11 +1,16 @@
 module.exports = {
-    content: ['./dist/*'],
-    theme: {
-        extend: {
-            colors: {
-                primary: '#1B73E8',
-            },
-        },
+  content: ["./dist/*"],
+  theme: {
+    textColor: {
+      white: "#FFF",
+      black: "#000",
     },
-    plugins: [],
+    extend: {
+      colors: {
+        "black-brand": "#252125",
+        "primary-text": "#252125",
+      },
+    },
+  },
+  plugins: [],
 };

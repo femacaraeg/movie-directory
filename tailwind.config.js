@@ -4,11 +4,7 @@ module.exports = {
     "./src/**/*.{html,js,ts, tsx}",
     "./src/components/**/*.{js,ts,tsx}",
   ],
-  // content: ["./dist/*"],
   theme: {
-    textColor: {
-      black: "#000",
-    },
     extend: {
       fontFamily: {
         lato: ["Lato", "sans-serif"],

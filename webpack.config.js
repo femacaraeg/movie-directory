@@ -2,10 +2,10 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-console.log("NODE_ENV", process.env.NODE_ENV);
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  mode: "production",
+  mode: devMode ? "development" : "production",
   entry: path.join(__dirname, "src", "index.tsx"),
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -31,7 +31,11 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader"],
+        use: [
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "postcss-loader",
+        ],
       },
       {
         test: /\.(png|jp(e*)g|svg|gif)$/,
@@ -55,10 +59,7 @@ module.exports = {
       template: path.join(__dirname, "src", "index.html"),
       filename: "index.html",
     }),
-    new MiniCssExtractPlugin({
-      filename: "output.css",
-    }),
-  ],
+  ].concat(devMode ? [] : new MiniCssExtractPlugin({ filename: "output.css" })),
   performance: {
     hints: false,
     maxEntrypointSize: 512000,

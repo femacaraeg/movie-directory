@@ -10,7 +10,7 @@ export default function MovieCard(props: Movie) {
   const { title, year, poster } = props;
 
   return (
-    <div className="rounded-lg w-80 cursor-pointer hover:border-white hover:border-2">
+    <div className="rounded-lg w-80 cursor-pointer hover:bg-gray-700">
       <div className="rounded-t-lg">
         <img
           src={poster}

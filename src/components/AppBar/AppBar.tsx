@@ -1,5 +1,6 @@
 import React from "react";
 
+import { Link } from "react-router-dom";
 import Logo from "../../assets/movea1x.png";
 
 function AppBar() {
@@ -12,12 +13,14 @@ function AppBar() {
         <div className="ml-16">
           <ul className="flex gap-8">
             <li>
-              <a href="#" className="text-violet-700">
+              <Link to="/" className="hover:font-bold active:font-bold">
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#">Favorites</a>
+              <Link to="favorites" className="hover:font-bold">
+                Favorites
+              </Link>
             </li>
           </ul>
         </div>

@@ -1,7 +1,23 @@
 import React from "react";
 
-import { Link } from "react-router-dom";
+import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import type { LinkProps } from "react-router-dom";
 import Logo from "../../assets/movea1x.png";
+
+function CustomLink({ children, to, ...props }: LinkProps) {
+  const resolved = useResolvedPath(to);
+  const match = useMatch({ path: resolved.pathname, end: true });
+
+  return (
+    <Link
+      to={to}
+      className={`${match ? "font-bold" : "font-norm"} hover:font-semibold`}
+      {...props}
+    >
+      {children}
+    </Link>
+  );
+}
 
 function AppBar() {
   return (
@@ -13,14 +29,10 @@ function AppBar() {
         <div className="ml-16">
           <ul className="flex gap-8">
             <li>
-              <Link to="/" className="hover:font-bold active:font-bold">
-                Home
-              </Link>
+              <CustomLink to="/">Home</CustomLink>
             </li>
             <li>
-              <Link to="favorites" className="hover:font-bold">
-                Favorites
-              </Link>
+              <CustomLink to="favorites">Favorites</CustomLink>
             </li>
           </ul>
         </div>

@@ -5,13 +5,18 @@
   "main": "index.tsx",
   "scripts": {
     "test": "jest",
-    "dev": "webpack serve --mode=development",
+    "dev": "webpack serve --mode development",
     "build": "export NODE_ENV=production && webpack --mode production",
     "build-css": "tailwindcss -i ./src/styles.css -o ./dist/output.css --watch"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/base": "^5.0.0-alpha.92",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.3.0"

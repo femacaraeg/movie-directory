@@ -1,12 +1,7 @@
 import React from "react";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-
-interface Movie {
-  title: string;
-  year?: string;
-  poster: string;
-}
+import Movie from "../../models/movie";
 
 export default function MovieCard(props: Movie) {
   const { title, year, poster } = props;

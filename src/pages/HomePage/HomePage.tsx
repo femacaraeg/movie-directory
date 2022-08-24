@@ -1,34 +1,49 @@
 import React, { useState, useEffect } from "react";
 
+import _ from "lodash";
+import { useSearchParams } from "react-router-dom";
+
 import MovieCard from "../../components/MovieCard";
 
+import Movie from "../../models/movie";
+
 export default function HomePage() {
-  const [movieList, setMovieList] = useState([]);
+  const [movieList, setMovieList] = useState<Movie[]>([]);
 
-  const getMovieList = async () => {
-    const url =
-      "http://www.omdbapi.com/?i=tt3896198&apikey=a5f6f326&s=star wars";
+  const [searchParams] = useSearchParams();
 
-    const response = await fetch(url);
+  const query = searchParams.get('search') || '';
+
+  const getMovieList = async (query?: string): Promise<Movie[]> => {
+    const response = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=a5f6f326&s=${query}`);
     const responseJSON = await response.json();
 
     if (responseJSON.Search) {
-      setMovieList(responseJSON.Search);
+      const deserializeResponse = responseJSON.Search.map((res: Movie) =>
+      _.mapKeys(res, (value, key) => _.camelCase(key))
+      );
+
+      return deserializeResponse;
     }
+
+    return [];
   };
 
   useEffect(() => {
-    getMovieList();
-  }, []);
+    (async () => {
+      await getMovieList(query).then((items) => setMovieList(items));
+    })();
+  }, [query]);
 
   return (
     <div className="container px-12 flex gap-4">
       {movieList.map((movie, index) => (
         <MovieCard
+          imdbId={movie.imdbId}
           key={index}
-          title={movie.Title}
-          year={movie.Year}
-          poster={movie.Poster}
+          title={movie.title}
+          year={movie.year}
+          poster={movie.poster}
         />
       ))}
     </div>

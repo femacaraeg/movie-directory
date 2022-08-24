@@ -11,6 +11,7 @@
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "Node",
     "typeRoots": ["src/@types", "./node_modules/@types"],
+    "strict": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"]

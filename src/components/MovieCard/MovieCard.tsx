@@ -1,34 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Movie from "../../models/movie";
 
-export default function MovieCard(props: Movie) {
-  const { title, year, poster } = props;
+import Movie from "../../models/movie";
+import MovieContext from '../../store/movieContext';
+
+export default function MovieCard({ movie: movieProp }: any) {
+  const { poster, imdbId } = movieProp;
+
+  const favoritesCtx = useContext(MovieContext);
+
+  const itemIsFavorite = favoritesCtx.itemIsFavorite(imdbId);
+
+  const toggleFavoriteStatusHandler = () => {
+    if (itemIsFavorite) {
+      favoritesCtx.removeFromFavorites(movieProp);
+    } else {
+      favoritesCtx.addToFavorites(movieProp);
+    }
+  };
 
   return (
-    <div className="rounded-lg w-80 hover:bg-gray-700">
-      <div className="rounded-t-lg">
-        <img
+    <div className="rounded-lg hover:cursor-pointer image-container">
+       <img
           src={poster}
           alt="movie"
-          className="object-cove w-full h-1/2 rounded-t-lg"
+          className="object-cove rounded-lg h-72 w-52"
         />
-      </div>
-      <div className="gap-1 p-2 flex rounded-b-lg h-14 justify-between">
-        <div className="w-3/4">
-          <p className="text-sm text-white">
-            <span className="font-bold">{title}</span>
-            &nbsp;({year})
-          </p>
+        <div className="overlay text-white" onClick={toggleFavoriteStatusHandler}>
+          { 
+            itemIsFavorite ? (
+              <p>Remove from Favorites</p>
+            ) : (
+              <p>Add to Favorites</p>
+            )
+          }
         </div>
-        <button>
-          <AddCircleIcon
-            sx={{ color: "white" }}
-            className="hover: cursor-pointer"
-          />
-        </button>
-      </div>
     </div>
   );
 }

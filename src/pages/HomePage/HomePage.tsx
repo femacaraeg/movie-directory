@@ -36,14 +36,11 @@ export default function HomePage() {
   }, [query]);
 
   return (
-    <div className="container px-12 flex gap-4">
+    <div className="container pl-12 flex  gap-5 flex-wrap">
       {movieList.map((movie, index) => (
         <MovieCard
-          imdbId={movie.imdbId}
           key={index}
-          title={movie.title}
-          year={movie.year}
-          poster={movie.poster}
+          movie={movie}
         />
       ))}
     </div>

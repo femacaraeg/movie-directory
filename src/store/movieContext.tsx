@@ -8,8 +8,9 @@ type MovieContextObj = {
   totalFavorites: number;
   addToFavorites: (movie: Movie) => void;
   removeFromFavorites: (movie: Movie) => void;
-  getItems: () => void;
-  itemIsFavorite: any;
+  // TODO: improve and update the reutrn promise type of getItems
+  getItems: (title: string) => any;
+  itemIsFavorite: (id: string) => boolean;
 };
 
 export const MovieContext = createContext<MovieContextObj>({
@@ -17,8 +18,8 @@ export const MovieContext = createContext<MovieContextObj>({
   totalFavorites: 0,
   addToFavorites: (movie: Movie) => {},
   removeFromFavorites: (movie: Movie) => {},
-  getItems: () => {},
-  itemIsFavorite: false,
+  getItems: (title: string) => [],
+  itemIsFavorite: (id: string) => false,
 });
 
 export const MovieProvider: FC<{children?: ReactNode}> = (props) => {
@@ -34,20 +35,22 @@ export const MovieProvider: FC<{children?: ReactNode}> = (props) => {
     setFavorites(newFavorites);
   };
 
-  const getMovieList = async() => {
+  const getMovieList = async(title: string) => {
     const url =
-      "http://www.omdbapi.com/?i=tt3896198&apikey=a5f6f326&s=star wars";
+    `http://www.omdbapi.com/?i=tt3896198&apikey=a5f6f326&s=${title}`;
 
     const response = await fetch(url);
     const responseJSON = await response.json();
 
-    const deserializeResponse = responseJSON.Search.map((res: Movie) =>
-      _.mapKeys(res, (value, key) => _.camelCase(key))
-    );
-
     if (responseJSON.Search) {
-      // setMovieList(deserializeResponse);
+      const deserializeResponse = responseJSON.Search.map((res: Movie) =>
+      _.mapKeys(res, (value, key) => _.camelCase(key))
+      );
+
+      return deserializeResponse;
     }
+
+    return [];
   };
 
   const itemIsFavoriteHandler = (id: string) => {

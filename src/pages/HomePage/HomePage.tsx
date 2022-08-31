@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import _ from "lodash";
 import { useSearchParams } from "react-router-dom";
 
 import MovieCard from "../../components/MovieCard";
+import MovieContext from "../../store/movieContext";
 
 import Movie from "../../models/movie";
 
@@ -12,36 +13,22 @@ export default function HomePage() {
 
   const [searchParams] = useSearchParams();
 
-  const query = searchParams.get('search') || '';
+  const movieCtx = useContext(MovieContext);
 
-  const getMovieList = async (query?: string): Promise<Movie[]> => {
-    const response = await fetch(`http://www.omdbapi.com/?i=tt3896198&apikey=a5f6f326&s=${query}`);
-    const responseJSON = await response.json();
-
-    if (responseJSON.Search) {
-      const deserializeResponse = responseJSON.Search.map((res: Movie) =>
-      _.mapKeys(res, (value, key) => _.camelCase(key))
-      );
-
-      return deserializeResponse;
-    }
-
-    return [];
-  };
+  const query = searchParams.get("search") || "";
 
   useEffect(() => {
     (async () => {
-      await getMovieList(query).then((items) => setMovieList(items));
+      await movieCtx
+        .getItems(query)
+        .then((items: Movie[]) => setMovieList(items));
     })();
   }, [query]);
 
   return (
-    <div className="container pl-12 flex  gap-5 flex-wrap">
+    <div className="container mx-auto px-8 flex gap-4 flex-wrap">
       {movieList.map((movie, index) => (
-        <MovieCard
-          key={index}
-          movie={movie}
-        />
+        <MovieCard key={index} movie={movie} />
       ))}
     </div>
   );

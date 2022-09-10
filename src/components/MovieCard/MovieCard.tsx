@@ -24,7 +24,7 @@ export default function MovieCard({ movie: movieProp }: any) {
     <div className="rounded-lg hover:cursor-pointer image-container">
        <img
           src={poster}
-          alt="movie"
+          alt="movie poster"
           className="object-cove rounded-lg h-72 w-52"
         />
         <div className="overlay text-white" onClick={toggleFavoriteStatusHandler}>

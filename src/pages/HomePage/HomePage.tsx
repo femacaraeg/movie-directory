@@ -1,33 +1,38 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import _ from "lodash";
 import { useSearchParams } from "react-router-dom";
-import { CircularProgress, Box } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 
 import MovieCard from "../../components/MovieCard";
-import MovieContext from "../../store/movieContext";
+import useHttp from "../../hooks/useHttp";
 
 import Movie from "../../models/movie";
 
 export default function HomePage() {
   const [movieList, setMovieList] = useState<Movie[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { isLoading, error, sendRequest: fetchMovies } = useHttp();
 
   const [searchParams] = useSearchParams();
-
-  const movieCtx = useContext(MovieContext);
 
   const query = searchParams.get("search") || "";
 
   useEffect(() => {
-    (async () => {
-      setIsLoading(true);
-      await movieCtx.getItems(query).then((items: Movie[]) => {
-        setMovieList(items);
-        setIsLoading(false);
-      });
-    })();
-  }, [query]);
+    const transformMovies = (moviesObj: any) => {
+      if (moviesObj.Search) {
+        const deserializeResponse = moviesObj.Search.map((res: Movie) =>
+          _.mapKeys(res, (value, key) => _.camelCase(key))
+        );
+
+        setMovieList(deserializeResponse);
+      }
+    };
+
+    fetchMovies(
+      { url: `http://www.omdbapi.com/?apikey=a5f6f326&s=${query}` },
+      transformMovies
+    );
+  }, [fetchMovies, query]);
 
   return (
     <div className="container mx-auto px-8 flex gap-4 flex-wrap">
@@ -49,6 +54,7 @@ export default function HomePage() {
           <CircularProgress />
         </div>
       )}
+      {error && <p>{error}</p>}
     </div>
   );
 }

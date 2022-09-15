@@ -6,9 +6,10 @@ const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   mode: "production",
-  entry: path.join(__dirname, "src", "index.js"),
+  // entry: path.join(__dirname, "src", "index.js"),
+  entry: ["@babel/polyfill", "./src/index.js"],
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.join(__dirname, "/dist"),
     filename: "bundle.js",
     clean: true,
   },

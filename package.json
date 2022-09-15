@@ -9,7 +9,7 @@
     "dev": "webpack serve --mode development",
     "build": "export NODE_ENV=production && webpack --mode production",
     "build-css": "tailwindcss -i ./src/styles.css -o ./dist/output.css --watch",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d dist"
   },
   "author": "",
   "license": "ISC",

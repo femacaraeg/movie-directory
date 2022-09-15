@@ -10,18 +10,16 @@ const NotFound = React.lazy(() => import("./pages/NotFound"));
 
 function App() {
   return (
-    <>
-      <Router>
-        <AppBar />
-        <Suspense fallback={<p>Loading</p>}>
-          <Routes>
-            <Route path="*" element={<NotFound />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="favorites" element={<Favorites />} />
-          </Routes>
-        </Suspense>
-      </Router>
-    </>
+    <Router>
+      <AppBar />
+      <Suspense fallback={<p>Loading</p>}>
+        <Routes>
+          <Route path="*" element={<NotFound />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="favorites" element={<Favorites />} />
+        </Routes>
+      </Suspense>
+    </Router>
   );
 }
 

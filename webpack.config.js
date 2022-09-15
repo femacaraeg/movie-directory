@@ -6,7 +6,7 @@ const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
   mode: "production",
-  entry: path.join(__dirname, "src", "index.tsx"),
+  entry: path.join(__dirname, "src", "index.js"),
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
@@ -67,5 +67,11 @@ module.exports = {
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js", ".svg"],
+  },
+  devServer: {
+    port: 4444,
+    watchFiles: "./",
+    static: "./dist",
+    historyApiFallback: true,
   },
 };

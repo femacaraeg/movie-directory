@@ -29,7 +29,7 @@ export default function HomePage() {
     };
 
     fetchMovies(
-      { url: `http://www.omdbapi.com/?apikey=a5f6f326&s=${query}` },
+      { url: `https://www.omdbapi.com/?apikey=a5f6f326&s=${query}` },
       transformMovies
     );
   }, [fetchMovies, query]);

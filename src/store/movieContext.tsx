@@ -40,15 +40,15 @@ export const MovieProvider: FC<{ children?: ReactNode }> = (props) => {
   const getMovieList = async (title: string): Promise<any> => {
     setError(null);
 
-    const url = `http://www.omdbapi.com/?apikey=a5f6f326&s=${title}`;
+    const url = `https://www.omdbapi.com/?apikey=a5f6f326&s=${title}`;
 
     try {
       const response = await fetch(url);
       const responseJSON = await response.json();
 
       if (!response.ok) {
-        throw new Error('Something went wrong!');
-      } 
+        throw new Error("Something went wrong!");
+      }
 
       if (responseJSON.Search) {
         const deserializeResponse = responseJSON.Search.map((res: Movie) =>
